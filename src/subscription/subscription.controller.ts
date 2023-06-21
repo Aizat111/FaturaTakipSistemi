@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
@@ -15,6 +16,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles-auth.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
 @ApiTags('Abonelik Bilgileri')
 @Controller('subscription')
@@ -33,11 +35,13 @@ export class SubscriptionController {
     return this.subscriptionService.findByUser(+id);
   }
 
-  @Roles('SUPERADMIN')
+  @Roles('SUPERADMIN','USER')
   @UseGuards(RolesGuard)
   @Get()
-  findAll() {
-    return this.subscriptionService.findAll();
+  findAll(@Req() request: Request) {
+    const  user :any  = request;
+
+    return this.subscriptionService.findAll(user?.user);
   }
 
   @UseGuards(JwtAuthGuard)

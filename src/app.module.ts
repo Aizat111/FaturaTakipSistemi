@@ -27,7 +27,7 @@ import { TwilioModule } from 'nestjs-twilio';
       database: process.env.MYSQL_DB,
       models: [User, UserRoles, Role, Subscription, BillPaymentList],
       autoLoadModels: true,
-      // sync: { force: false, alter: true },
+      //sync: { force: false, alter: true },
     }),
     UsersModule,
     RolesModule,
