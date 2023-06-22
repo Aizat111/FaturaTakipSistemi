@@ -41,6 +41,12 @@ export class BillPaymentListController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('graphic')
+  graphic(@Query() params: any) {
+    return this.billPaymentListService.graphic(params);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.billPaymentListService.findOne(+id);

@@ -48,8 +48,25 @@ export class BillPaymentListService {
         include: { all: true },
 
       });
+      return bil;
+    }
+  }
+  async graphic(param: any) {
+    if (!param) {
+      const bil = await this.billRepository.findAll({ include: { all: true } });
+      return bil;
+    } else {
+      const bil = await this.billRepository.findAll({
+        where: param,
+        attributes: [
+          'billIssueDate',
+          [sequelize.fn('sum', sequelize.col('billAmount')), 'total_amount'],
+        ],
+        group: ['billIssueDate'],
+        raw: true,
+        include: { all: true },
 
-
+      });
       return bil;
     }
   }
