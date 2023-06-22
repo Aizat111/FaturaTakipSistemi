@@ -76,7 +76,7 @@ export class AuthService {
     return this.twilioService.client.messages.create({
       body: message,
       from: '+12707217792',
-      to: number,
+      to: '+90'+number,
     });
   }
 }
